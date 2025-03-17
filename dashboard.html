@@ -1,0 +1,712 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pet Feeder App - Figma Compatible</title>
+    <style>
+        /* Reset */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+        }
+        
+        body {
+            background-color: #f5f5f5;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+        }
+        
+        /* Color variables */
+        :root {
+            --tuntun-color1: #603B28;
+            --tuntun-color2: #B07D5C;
+            --tantan-color1: #090706;
+            --ashe-color1: #A38466;
+            --ashe-color2: #6E5648;
+            --ashe-color3: #475B50;
+            --caroline-color1: #61798D;
+            --caroline-color2: #6D5E53;
+            --caroline-color3: #D7C3B3;
+            --lele-color1: #37524F;
+            --lele-color2: #93887C;
+            --lele-color3: #624F3C;
+        }
+        
+        /* Device mockup */
+        .device {
+            position: relative;
+            width: 288px;
+            height: 600px;
+            overflow: hidden;
+            background-color: white;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+            border-radius: 24px;
+            margin: 32px auto;
+        }
+        
+        /* Status bar */
+        .status-bar {
+            height: 24px;
+            width: 100%;
+            background-color: #f3f3f3;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0 16px;
+        }
+        
+        .status-time {
+            font-size: 12px;
+            font-weight: 600;
+        }
+        
+        .status-icons {
+            display: flex;
+            align-items: center;
+            gap: 4px;
+        }
+        
+        /* Duration selector */
+        .duration-selector {
+            margin: 12px;
+            padding: 4px;
+            background-color: #f3f3f3;
+            border-radius: 24px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+        
+        .duration-option {
+            flex: 1;
+            text-align: center;
+            padding: 4px 0;
+            border-radius: 24px;
+            font-size: 12px;
+            color: var(--ashe-color2);
+        }
+        
+        .duration-option.active {
+            background-color: var(--tuntun-color1);
+            color: white;
+            font-weight: 500;
+        }
+        
+        /* Pet selector */
+        .pet-selector {
+            display: flex;
+            gap: 8px;
+            margin: 0 12px 4px 12px;
+            overflow-x: auto;
+            padding-bottom: 4px;
+        }
+        
+        .pet-avatar {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            overflow: hidden;
+        }
+        
+        .pet-avatar.active {
+            border: 2px solid var(--tuntun-color1);
+        }
+        
+        .pet-color {
+            width: 100%;
+            height: 100%;
+        }
+        
+        .add-pet {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background-color: #f3f3f3;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        /* Content area with scroll */
+        .content {
+            padding: 12px 8px;
+            height: calc(100% - 150px);
+            overflow-y: auto;
+            padding-bottom: 70px; /* Space for tab bar */
+        }
+        
+        .card {
+            background-color: white;
+            border-radius: 12px;
+            padding: 12px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+            margin-bottom: 12px;
+        }
+        
+        .card-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 8px;
+        }
+        
+        .card-title {
+            font-size: 14px;
+            font-weight: 700;
+            color: var(--tantan-color1);
+        }
+        
+        .action-buttons {
+            display: flex;
+            gap: 8px;
+        }
+        
+        .action-button {
+            font-size: 12px;
+            padding: 4px 8px;
+            border-radius: 6px;
+            display: flex;
+            align-items: center;
+        }
+        
+        .feed-now {
+            background-color: var(--lele-color1);
+            color: white;
+        }
+        
+        .edit-button {
+            background-color: var(--caroline-color3);
+            color: var(--tuntun-color1);
+        }
+        
+        /* Feeding info */
+        .feeding-info {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .time-info {
+            display: flex;
+            align-items: center;
+        }
+        
+        .time-icon {
+            width: 40px;
+            height: 40px;
+            border-radius: 8px;
+            background-color: var(--caroline-color3);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-right: 8px;
+        }
+        
+        .time-details p {
+            font-size: 14px;
+            font-weight: 500;
+            color: var(--tantan-color1);
+        }
+        
+        .time-details span {
+            font-size: 12px;
+            color: var(--ashe-color2);
+        }
+        
+        .portion-info {
+            text-align: right;
+        }
+        
+        .portion-info p {
+            font-size: 14px;
+            font-weight: 500;
+            color: var(--tantan-color1);
+        }
+        
+        .portion-info span {
+            font-size: 12px;
+            color: var(--ashe-color2);
+        }
+        
+        /* Consumption graph */
+        .consumption {
+            margin-top: 12px;
+            padding-top: 8px;
+            border-top: 1px solid var(--caroline-color3);
+        }
+        
+        .consumption-header {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 4px;
+        }
+        
+        .consumption-title {
+            font-size: 12px;
+            font-weight: 500;
+            color: var(--tantan-color1);
+        }
+        
+        .consumption-total {
+            font-size: 12px;
+            color: var(--caroline-color1);
+        }
+        
+        .chart {
+            height: 48px;
+            display: flex;
+            align-items: flex-end;
+            justify-content: space-around;
+        }
+        
+        .chart-column {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: flex-end;
+            height: 100%;
+            flex: 1;
+        }
+        
+        .bar {
+            width: 20px;
+            border-top-left-radius: 2px;
+            border-top-right-radius: 2px;
+        }
+        
+        .bar.filled {
+            background-color: var(--tuntun-color1);
+        }
+        
+        .bar.empty {
+            border: 1px dashed var(--ashe-color2);
+            border-bottom: none;
+        }
+        
+        .time-label {
+            font-size: 12px;
+            color: var(--ashe-color2);
+            margin-top: 4px;
+        }
+        
+        /* Health monitoring */
+        .metrics-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 12px;
+        }
+        
+        .metric-card {
+            padding: 8px;
+            border-radius: 8px;
+            background-color: var(--caroline-color3);
+        }
+        
+        .metric-header {
+            display: flex;
+            justify-content: space-between;
+            font-size: 12px;
+            margin-bottom: 4px;
+        }
+        
+        .metric-name {
+            color: var(--tantan-color1);
+        }
+        
+        .metric-value {
+            color: var(--caroline-color1);
+        }
+        
+        .metric-chart {
+            height: 40px;
+            position: relative;
+        }
+        
+        .metric-footer {
+            font-size: 12px;
+            color: var(--ashe-color2);
+            margin-top: 4px;
+        }
+        
+        /* Nutrition analysis */
+        .nutrition-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 8px;
+            margin-bottom: 8px;
+        }
+        
+        .nutrition-card {
+            padding: 8px;
+            border-radius: 8px;
+            background-color: var(--caroline-color3);
+        }
+        
+        .nutrition-type {
+            font-size: 12px;
+            font-weight: 500;
+            color: var(--tantan-color1);
+        }
+        
+        .nutrition-value {
+            font-size: 18px;
+            font-weight: 700;
+            color: var(--tantan-color1);
+        }
+        
+        .calorie-info {
+            display: flex;
+            justify-content: space-between;
+            font-size: 12px;
+            margin-bottom: 4px;
+        }
+        
+        .calorie-label {
+            color: var(--tantan-color1);
+        }
+        
+        .calorie-value {
+            color: var(--caroline-color1);
+        }
+        
+        .progress-bar {
+            height: 8px;
+            background-color: #e5e5e5;
+            border-radius: 4px;
+            margin-bottom: 4px;
+            overflow: hidden;
+        }
+        
+        .progress-fill {
+            height: 100%;
+            background-color: var(--tuntun-color1);
+            border-radius: 4px;
+        }
+        
+        /* Tab bar */
+        .tab-bar {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            height: 64px;
+            display: flex;
+            align-items: center;
+            justify-content: space-around;
+            background-color: white;
+            box-shadow: 0 -2px 10px rgba(0, 0, 0, 0.05);
+        }
+        
+        .tab-item {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        
+        .tab-icon {
+            width: 24px;
+            height: 24px;
+            margin-bottom: 4px;
+        }
+        
+        .tab-label {
+            font-size: 12px;
+            color: var(--ashe-color2);
+        }
+        
+        .tab-item.active .tab-label {
+            color: var(--tuntun-color1);
+            font-weight: 700;
+        }
+        
+        .active-indicator {
+            margin-top: 4px;
+            height: 2px;
+            width: 24px;
+            border-radius: 2px;
+        }
+        
+        .tab-item.active .active-indicator {
+            background-color: var(--tuntun-color1);
+        }
+        
+        /* SVG styling */
+        .line-chart {
+            stroke: var(--tuntun-color1);
+            stroke-width: 2;
+            fill: none;
+        }
+        
+        .bar-chart-bar {
+            fill: var(--caroline-color1);
+        }
+    </style>
+</head>
+<body>
+    <div class="device">
+        <!-- Status bar -->
+        <div class="status-bar">
+            <div class="status-time">2:07</div>
+            <div class="status-icons">
+                <div style="display: flex; gap: 4px;">
+                    <div style="height: 8px; width: 4px; background-color: black; border-radius: 2px;"></div>
+                    <div style="height: 12px; width: 4px; background-color: black; border-radius: 2px;"></div>
+                    <div style="height: 16px; width: 4px; background-color: black; border-radius: 2px;"></div>
+                </div>
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none">
+                    <path d="M1 8L12 17L23 8" stroke="black" stroke-width="2"/>
+                </svg>
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none">
+                    <rect x="3" y="6" width="18" height="12" rx="2" stroke="black" stroke-width="2"/>
+                    <rect x="7" y="10" width="10" height="4" rx="1" fill="black"/>
+                </svg>
+            </div>
+        </div>
+
+        <!-- Time duration selector -->
+        <div class="duration-selector">
+            <div class="duration-option active">
+                <span>W</span>
+            </div>
+            <div class="duration-option">
+                <span>M</span>
+            </div>
+            <div class="duration-option">
+                <span>6M</span>
+            </div>
+            <div class="duration-option">
+                <span>Y</span>
+            </div>
+        </div>
+        
+        <!-- Pet avatars selector -->
+        <div class="pet-selector">
+            <div class="pet-avatar active">
+                <div class="pet-color" style="background-color: var(--tuntun-color1);"></div>
+            </div>
+            <div class="pet-avatar">
+                <div class="pet-color" style="background-color: var(--tantan-color1);"></div>
+            </div>
+            <div class="pet-avatar">
+                <div class="pet-color" style="background-color: var(--ashe-color1);"></div>
+            </div>
+            <div class="pet-avatar">
+                <div class="pet-color" style="background-color: var(--caroline-color1);"></div>
+            </div>
+            <div class="pet-avatar">
+                <div class="pet-color" style="background-color: var(--lele-color1);"></div>
+            </div>
+            <div class="add-pet">
+                <svg viewBox="0 0 24 24" width="16" height="16" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round" style="color: var(--ashe-color2);">
+                    <path d="M12 5v14M5 12h14"></path>
+                </svg>
+            </div>
+        </div>
+
+        <!-- Main content -->
+        <div class="content">
+            <!-- Next feeding card -->
+            <div class="card">
+                <div class="card-header">
+                    <div class="card-title">Next Feeding</div>
+                    <div class="action-buttons">
+                        <div class="action-button feed-now">
+                            <span>Feed Now</span>
+                        </div>
+                        <div class="action-button edit-button">
+                            <span>Edit</span>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="feeding-info">
+                    <div class="time-info">
+                        <div class="time-icon">
+                            <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" style="color: var(--tuntun-color1);">
+                                <circle cx="12" cy="12" r="10"></circle>
+                                <polyline points="12 6 12 12 16 14"></polyline>
+                            </svg>
+                        </div>
+                        <div class="time-details">
+                            <p>5:30 PM</p>
+                            <span>In 2h 15m</span>
+                        </div>
+                    </div>
+                    <div class="portion-info">
+                        <p>60g</p>
+                        <span>Portion size</span>
+                    </div>
+                </div>
+                
+                <!-- Food consumption mini graph -->
+                <div class="consumption">
+                    <div class="consumption-header">
+                        <span class="consumption-title">Today's Consumption</span>
+                        <span class="consumption-total">180g / 240g</span>
+                    </div>
+                    <div class="chart">
+                        <div class="chart-column">
+                            <div class="bar filled" style="height: 35%;"></div>
+                            <div class="time-label">6am</div>
+                        </div>
+                        <div class="chart-column">
+                            <div class="bar filled" style="height: 65%;"></div>
+                            <div class="time-label">12pm</div>
+                        </div>
+                        <div class="chart-column">
+                            <div class="bar empty" style="height: 50%;"></div>
+                            <div class="time-label">5pm</div>
+                        </div>
+                        <div class="chart-column">
+                            <div class="bar empty" style="height: 40%;"></div>
+                            <div class="time-label">9pm</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Health monitoring -->
+            <div class="card">
+                <div class="card-title" style="margin-bottom: 8px;">Health Monitoring</div>
+                
+                <!-- Health metrics grid -->
+                <div class="metrics-grid">
+                    <!-- Weight trend mini chart -->
+                    <div class="metric-card">
+                        <div class="metric-header">
+                            <span class="metric-name">Weight</span>
+                            <span class="metric-value">5.2kg</span>
+                        </div>
+                        
+                        <!-- Mini line chart -->
+                        <div class="metric-chart">
+                            <svg width="100%" height="100%" viewBox="0 0 100 30" preserveAspectRatio="none">
+                                <polyline
+                                    points="0,15 20,12 40,8 60,10 80,7 100,10"
+                                    class="line-chart"
+                                />
+                            </svg>
+                        </div>
+                        
+                        <div class="metric-footer">
+                            BCS: 6/9
+                        </div>
+                    </div>
+                    
+                    <!-- Water intake mini chart -->
+                    <div class="metric-card">
+                        <div class="metric-header">
+                            <span class="metric-name">Water</span>
+                            <span class="metric-value">180ml</span>
+                        </div>
+                        
+                        <!-- Mini bar chart -->
+                        <div class="metric-chart">
+                            <svg width="100%" height="100%" viewBox="0 0 100 30" preserveAspectRatio="none">
+                                <rect x="5" y="12" width="6" height="18" class="bar-chart-bar" />
+                                <rect x="20" y="9" width="6" height="21" class="bar-chart-bar" />
+                                <rect x="35" y="13.5" width="6" height="16.5" class="bar-chart-bar" />
+                                <rect x="50" y="10.5" width="6" height="19.5" class="bar-chart-bar" />
+                                <rect x="65" y="7.5" width="6" height="22.5" class="bar-chart-bar" />
+                                <rect x="80" y="12" width="6" height="18" class="bar-chart-bar" />
+                                <rect x="95" y="9" width="6" height="21" class="bar-chart-bar" />
+                            </svg>
+                        </div>
+                        
+                        <div class="metric-footer">
+                            of 250ml target
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Nutrition analysis - Simplified -->
+            <div class="card">
+                <div class="card-header">
+                    <div class="card-title">Nutrition Analysis</div>
+                    <div class="action-buttons">
+                        <div class="action-button edit-button">
+                            <span>View More</span>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="nutrition-grid">
+                    <div class="nutrition-card">
+                        <div class="nutrition-type">Protein</div>
+                        <div class="nutrition-value">38%</div>
+                    </div>
+                    <div class="nutrition-card">
+                        <div class="nutrition-type">Fat</div>
+                        <div class="nutrition-value">18%</div>
+                    </div>
+                    <div class="nutrition-card">
+                        <div class="nutrition-type">Carbs</div>
+                        <div class="nutrition-value">24%</div>
+                    </div>
+                </div>
+                
+                <div class="calorie-info">
+                    <span class="calorie-label">Calorie Intake</span>
+                    <span class="calorie-value">250kcal / 300kcal</span>
+                </div>
+                <div class="progress-bar">
+                    <div class="progress-fill" style="width: 80%;"></div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Tab bar -->
+        <div class="tab-bar">
+            <div class="tab-item active">
+                <div class="tab-icon">
+                    <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M12 3L4 9V21H9V14H15V21H20V9L12 3Z" fill="#603B28" />
+                    </svg>
+                </div>
+                <span class="tab-label" style="color: var(--tuntun-color1); font-weight: bold;">Feed</span>
+                <div class="active-indicator" style="background-color: var(--tuntun-color1);"></div>
+            </div>
+            
+            <div class="tab-item">
+                <div class="tab-icon">
+                    <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M20 11H4V13H20V11Z" fill="#6E5648" />
+                        <path d="M4 18H14V16H4V18Z" fill="#6E5648" />
+                        <path d="M4 6H14V8H4V6Z" fill="#6E5648" />
+                        <path d="M16 6H20V8H16V6Z" fill="#6E5648" />
+                        <path d="M19 15.5C19 14.12 17.88 13 16.5 13C15.12 13 14 14.12 14 15.5C14 16.88 15.12 18 16.5 18C17.88 18 19 16.88 19 15.5Z" fill="#6E5648" />
+                    </svg>
+                </div>
+                <span class="tab-label">Health</span>
+                <div class="active-indicator"></div>
+            </div>
+            
+            <div class="tab-item">
+                <div class="tab-icon">
+                    <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M18 2H6C4.9 2 4 2.9 4 4V20C4 21.1 4.9 22 6 22H18C19.1 22 20 21.1 20 20V4C20 2.9 19.1 2 18 2ZM6 4H11V12L8.5 10.5L6 12V4Z" fill="#6E5648" />
+                    </svg>
+                </div>
+                <span class="tab-label">Device</span>
+                <div class="active-indicator"></div>
+            </div>
+            
+            <div class="tab-item">
+                <div class="tab-icon">
+                    <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M12 12C14.21 12 16 10.21 16 8C16 5.79 14.21 4 12 4C9.79 4 8 5.79 8 8C8 10.21 9.79 12 12 12ZM12 14C9.33 14 4 15.34 4 18V20H20V18C20 15.34 14.67 14 12 14Z" fill="#6E5648" />
+                    </svg>
+                </div>
+                <span class="tab-label">Profile</span>
+                <div class="active-indicator"></div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
